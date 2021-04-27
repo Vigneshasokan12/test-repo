@@ -1,0 +1,44 @@
+
+public static void main(String a)
+{
+
+RestAssured.baseURI = "https://reqres.in/api/users/";
+ RequestSpecification httpRequest = RestAssured.given();
+ Response response = httpRequest.get();
+ 
+ // Retrieve the body of the Response
+ ResponseBody body = response.getBody();
+
+}
+
+public void ValidateDataFromJsonResponse(Response response, String keyValue ,String expectedValue )
+{
+
+// Make sure you are passing the correct get response value
+
+ JsonPath jsonPath = response.jsonPath();
+
+ // If you have nested value then mention with array number to get the data 
+ String Sample = jsonPath.get(keyValue);
+
+// If array number not specified, then entire array values will be returned as a single string
+System.out.println("Value received from response: " + Sample);
+
+ 
+try{
+
+// Validate the response using TestNG or use assertThat() from Junit to verfiy
+Assert.assertEquals(Sample, expectedValue , "Correct Value received in the Response...");
+
+}
+catch(AssertionError e)
+{
+               //  mismatches log will there
+               String value=e.getMessage();
+  
+               // You can print it in the report
+               System.out.println(value);
+}
+
+}
+               
